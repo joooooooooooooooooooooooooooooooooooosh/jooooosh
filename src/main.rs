@@ -30,9 +30,10 @@ fn run_code(code: &str) {
     let mut pc = 0;
     let mut lines = code.lines();
 
-    lines.find(|line| line.contains("j"))
+    let first_line = lines.find(|line| line.contains("j"))
          .expect("Invalid program - no j found");
-    let code = lines.collect::<Vec<&str>>();
+    let mut code = lines.collect::<Vec<&str>>();
+    code.insert(0, first_line);
 
     while pc < code.len() {
         let line = code[pc];
@@ -77,6 +78,7 @@ fn run_code(code: &str) {
                         match code[pc].chars().filter(|c| *c == 'o').count() {
                             START_LOOP => depth += 1,
                             END_LOOP => depth -= 1,
+                            _ => {}
                         }
                     }
                 }
