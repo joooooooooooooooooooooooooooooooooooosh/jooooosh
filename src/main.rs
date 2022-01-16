@@ -8,7 +8,11 @@ fn main() {
     }
 
     let code = fs::read_to_string(&args[1]).expect("Cannot read file");
-    run_code(&code);
+    if &args[0] == "jooooosh_transpile" {
+        transpile_from_bf(&code);
+    } else {
+        run_code(&code);
+    }
 }
 
 fn run_code(code: &str) {
@@ -85,4 +89,73 @@ fn run_code(code: &str) {
 
         pc += 1;
     }
+}
+
+fn transpile_from_bf(code: &str) {
+    let mut pc = 0;
+
+    print!("j");
+    while pc < code.len() {
+        let c = code.chars().nth(pc).unwrap();
+
+        match c {
+            '>' => {
+                println!("o");
+            }
+            '<' => {
+                println!("oo");
+            }
+            '+' => {
+                println!("ooo");
+            }
+            '-' => {
+                println!("oooo");
+            }
+            '.' => {
+                println!("ooooo");
+            }
+            ',' => {
+                println!("oooooo");
+            }
+            '[' => {
+                let mut depth = 1;
+                let mut _pc = pc;
+                while depth > 0 {
+                    if _pc >= code.len() {
+                        panic!("Parsing error: unmatched [");
+                    }
+                    _pc += 1;
+                    match code.chars().nth(_pc).unwrap() {
+                        '[' => depth += 1,
+                        ']' => depth -= 1,
+                        _ => {}
+                    }
+                }
+                println!("ooooooo");
+            }
+            ']' => {
+                let mut depth = 1;
+                let mut _pc = pc;
+                while depth > 0 {
+                    if _pc == 0 {
+                        panic!("Parsing error: unmatched ]");
+                    }
+                    _pc -= 1;
+                    match code.chars().nth(_pc).unwrap() {
+                        ']' => depth += 1,
+                        '[' => depth -= 1,
+                        _ => {}
+                    }
+                }
+                println!("oooooooo");
+            }
+            _ => {
+                print!("{c}");
+            }
+        }
+
+        pc += 1;
+    }
+
+    println!("sh");
 }
