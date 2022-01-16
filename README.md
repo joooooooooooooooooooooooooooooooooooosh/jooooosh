@@ -16,3 +16,10 @@ Each line in between (inclusive) the `j` and `sh` represents a single bf command
 |   `oooooooo`   | Jump back to the matching `ooooooo` if the cell at the pointer is not 0 |
 
 When reading input, `EOF` leaves the current cell unchanged.
+
+
+## FAQ
+
+- ... why?
+
+idk i was bored
