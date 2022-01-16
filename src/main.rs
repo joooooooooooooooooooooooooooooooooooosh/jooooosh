@@ -71,14 +71,12 @@ fn run_code(code: &str) {
                     let mut depth = 1;
                     while depth > 0 {
                         if pc >= code.len() {
-                            panic!("Parsing error: unmatched [");
+                            panic!("Parsing error: unmatched ooooooo");
                         }
                         pc += 1;
-                        match line.chars().filter(|c| *c == 'o').count() {
-                            // TODO: broken logic
+                        match code[pc].chars().filter(|c| *c == 'o').count() {
                             START_LOOP => depth += 1,
                             END_LOOP => depth -= 1,
-                            _ => {}
                         }
                     }
                 }
@@ -88,12 +86,12 @@ fn run_code(code: &str) {
                     let mut depth = 1;
                     while depth > 0 {
                         if pc == 0 {
-                            panic!("Parsing error: unmatched ]");
+                            panic!("Parsing error: unmatched oooooooo");
                         }
                         pc -= 1;
-                        match line.chars().filter(|c| *c == 'o').count() {
-                            START_LOOP => depth += 1,
-                            END_LOOP => depth -= 1,
+                        match code[pc].chars().filter(|c| *c == 'o').count() {
+                            END_LOOP => depth += 1,
+                            START_LOOP => depth -= 1,
                             _ => {}
                         }
                     }
@@ -101,6 +99,7 @@ fn run_code(code: &str) {
             }
             _ => {}
         }
+
         if line.contains("sh") {
             break;
         }
